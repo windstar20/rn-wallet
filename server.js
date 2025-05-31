@@ -1,11 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import {sql} from "./config/db.js";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config();
 
 const app = express();
+
+// middleware
+app.use(rateLimiter);
 app.use(express.json());
+
+
 app.use((req, res, next) => {
     console.log("Hey we hit a req, the method is", req.method);
     next();
